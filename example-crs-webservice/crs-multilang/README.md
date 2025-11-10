@@ -127,10 +127,32 @@ where a list of our input generators
 }
 ```
 
+# Troubleshooting
+
+## OSS-Fuzz Dockerfile Configuration
+
+As the competition requires a specialized format, the Dockerfile needs a few small adjustments. CRS-multilang is built on the AIxCC version of base-builder:v1.3.0.
+
+Here's an example of the necessary changes (from the mongoose project):
+```diff
+17c17
+< FROM gcr.io/oss-fuzz-base/base-builder
+---
+> FROM ghcr.io/aixcc-finals/base-builder:v1.3.0
+20c20
+< WORKDIR $SRC
+---
+> WORKDIR $SRC/mongoose
+```
+
+Note: The WORKDIR should be set to `$SRC/<project-name>` specific to each project (e.g., `$SRC/mongoose` for mongoose).
+
+Related issue: https://github.com/Team-Atlanta/aixcc-afc-atlantis/issues/6#issuecomment-3514059044
+
 # How to deploy
 Here is how to build and push all docker images for running the integrated CRS in Terraform.
 ```
-./docker-build.sh 
+./docker-build.sh
 ./docker-img-push.sh <REGISTRY URL> <TAG>
 ```
 
