@@ -10,10 +10,15 @@ RUN apt update && \
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y --default-toolchain 1.87
 ENV PATH="/root/.cargo/bin:${PATH}"
 
-# Install Python 3.10
-RUN add-apt-repository ppa:deadsnakes/ppa && \
-    apt update && \
-    apt install python3.10 python3.10-dev python3.10-distutils python3.10-venv -y
+# Install Python 3.10 # deadsnakes ended support for ubuntu20.04
+ARG PY_VER=3.10.14
+WORKDIR /usr/src
+RUN curl -fsSLO https://www.python.org/ftp/python/${PY_VER}/Python-${PY_VER}.tgz \
+    && tar -xzf Python-${PY_VER}.tgz
+WORKDIR /usr/src/Python-${PY_VER}
+RUN ./configure --enable-optimizations --with-ensurepip=install \
+    && make -j"$(nproc)" \
+    && make altinstall
 
 RUN apt update && \
     apt install -y protobuf-compiler ripgrep
