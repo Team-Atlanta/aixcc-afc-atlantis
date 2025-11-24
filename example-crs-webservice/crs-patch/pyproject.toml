@@ -111,9 +111,9 @@ python-gdb-static = { path = "wrappers/gdb_static" }
 # rr = { path = "wrappers/rr" }
 python-ripgrep = { path = "wrappers/ripgrep" }
 python-ctags = { path = "wrappers/ctags" }
-vcr-langchain = { git = "git+ssh://git@github.com/Team-Atlanta/vcr-langchain.git" }
+vcr-langchain = { git = "https://github.com/Team-Atlanta/vcr-langchain.git" }
 # Workaround from https://github.com/kevin1024/vcrpy/issues/880
-vcrpy = { git = "git+ssh://git@github.com/Team-Atlanta/vcrpy.git", branch = "team-atlanta-dev", marker = "platform_python_implementation == 'CPython' and python_version >='3.10'" }
+vcrpy = { git = "https://github.com/Team-Atlanta/vcrpy.git", branch = "team-atlanta-dev", marker = "platform_python_implementation == 'CPython' and python_version >='3.10'" }
 global = { path = "wrappers/global" }
 p4 = { path = "third_party/p4" }
 python-crs-architecture = { path = "wrappers/crs-architecture" }
