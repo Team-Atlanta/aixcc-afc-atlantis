@@ -1,0 +1,52 @@
+# TODO(metzman): Get rid of cifuzz-build-fuzzers and cifuzz-run-fuzzers.
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - build
+  - '-t'
+  - ghcr.io/aixcc-finals/cifuzz-base
+  - '-t'
+  - ghcr.io/aixcc-finals/cifuzz-base:v1
+  - '-f'
+  - infra/cifuzz/cifuzz-base/Dockerfile
+  - .
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - build
+  - '-t'
+  - ghcr.io/aixcc-finals/cifuzz-build-fuzzers
+  - '-t'
+  - ghcr.io/aixcc-finals/cifuzz-build-fuzzers:v1
+  - '-t'
+  - ghcr.io/aixcc-finals/clusterfuzzlite-build-fuzzers
+  - '-t'
+  - ghcr.io/aixcc-finals/clusterfuzzlite-build-fuzzers:v1
+  - '-f'
+  - infra/build_fuzzers.Dockerfile
+  - infra
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - build
+  - '-t'
+  - ghcr.io/aixcc-finals/cifuzz-run-fuzzers
+  - '-t'
+  - ghcr.io/aixcc-finals/cifuzz-run-fuzzers:v1
+  - '-t'
+  - ghcr.io/aixcc-finals/clusterfuzzlite-run-fuzzers
+  - '-t'
+  - ghcr.io/aixcc-finals/clusterfuzzlite-run-fuzzers:v1
+  - '-f'
+  - infra/run_fuzzers.Dockerfile
+  - infra
+images:
+- ghcr.io/aixcc-finals/cifuzz-base
+- ghcr.io/aixcc-finals/cifuzz-base:v1
+- ghcr.io/aixcc-finals/cifuzz-run-fuzzers
+- ghcr.io/aixcc-finals/cifuzz-run-fuzzers:v1
+- ghcr.io/aixcc-finals/cifuzz-build-fuzzers
+- ghcr.io/aixcc-finals/cifuzz-build-fuzzers:v1
+- ghcr.io/aixcc-finals/clusterfuzzlite-build-fuzzers
+- ghcr.io/aixcc-finals/clusterfuzzlite-build-fuzzers:v1
+- ghcr.io/aixcc-finals/clusterfuzzlite-run-fuzzers
+- ghcr.io/aixcc-finals/clusterfuzzlite-run-fuzzers:v1
+timeout: 1800s
